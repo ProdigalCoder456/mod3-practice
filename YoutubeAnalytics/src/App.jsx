@@ -1,25 +1,44 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, use } from 'react'
 import './App.css'
-import {chart as chartjs} from 'chart.js/auto'
-import {bar, chart, pie} from 'react-chartjs-2'
-import './assets/data/data.json'
-
+import {Chart as ChartJS} from 'chart.js/auto'
+import {Bar, Chart, Pie} from 'react-chartjs-2'
+import youtubeData from './assets/data/data.json'
 function App() {
-  const [count, setCount] = useState(0)
+  const [data, setData] = useState({})
+  const graphVariables = {
+    x: [],
+    y: []
+  }
 
-function getData(){
-const request = await fetch("/assets/data/data.json")
-const youtubeData = await request.json()
-console.log(youtubeData) 
-}
+
+  useEffect(() => {
+    setData(youtubeData)
+  }, [])
+
+  data.map((country) => {
+    graphVariables.x.push(country.flagCode)
+    graphVariables.y.push(country.YouTubeUsers_TotalUsers_Num_2024Feb)
+  })
+
+  console.log(data)
+
 
   return (
     <div>
-       <div>
-      <h1>Whats Good Planetary People</h1>
+      <div>
+        <Bar options={{}} 
+              data={{
+              labels: graphVariables.x,
+              datasets: [{
+                label: "Number of Youtube Users Feb. 2024",
+                data: graphVariables.y
+              }]
+             }}
+        ></Bar>
+      </div>
     </div>
-   </div> 
   )
 }
 
 export default App
+
