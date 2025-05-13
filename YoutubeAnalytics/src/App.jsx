@@ -15,6 +15,15 @@ function App() {
     setData(youtubeData)
   }, [])
 
+  let filteredData = []
+  data.forEach( (item) => {
+    let arr = ["India", "France", "Bulgaria", "United States"]
+    if (arr.includes(item.country)){
+      filteredData.push(item)
+    }
+  })
+
+
   data.map((country) => {
     graphVariables.x.push(country.flagCode)
     graphVariables.y.push(country.YouTubeUsers_TotalUsers_Num_2024Feb)
@@ -25,6 +34,9 @@ function App() {
 
   return (
     <div>
+      <div>
+        <h2>Youtube Stats by country</h2>
+      </div>
       <div>
         <Bar options={{}} 
               data={{
